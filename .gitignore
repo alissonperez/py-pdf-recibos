@@ -1,0 +1,64 @@
+# Python Cache
+__pycache__/
+*.py[cod]
+
+# Distribution / packaging
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+*.egg-info/
+dist/
+build/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Pytest
+.cache
+*.cover
+*.log
+coverage.xml
+*.bench
+
+# Pyre type checker
+.pyre/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pylint
+pylint-output.txt
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# VS Code settings
+.vscode/
+
+# MacOS
+.DS_Store
+
+# PyCharm
+.idea/
+*.iml
+
+# VSCode settings
+.vscode/
+
+# SQLite database
+*.db
+
+# Other artifacts
+*.bak
+*.tmp
+
+# Logs
+*.log
+
+*~
