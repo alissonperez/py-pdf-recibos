@@ -7,12 +7,12 @@ Este projeto é um gerador de recibos em PDF a partir de um arquivo CSV. Ele lê
 Abaixo está um exemplo do formato do arquivo CSV que deve ser usado como entrada para o gerador de recibos.
 
 ```csv
-Cliente,CPF_CNPJ,Endereço,Valor,Data do Pagamento,Descrição do Serviço,Data de Emissão,Recebedor
-João da Silva,123.456.789-00,Rua Exemplo, 123 - Cidade, Estado,500,00,05/11/2024,Serviço de consultoria em desenvolvimento de software.,05/11/2024,Fulano de Tal
-Maria Oliveira,987.654.321-00,Av. Central, 456 - Cidade, Estado,750,00,06/11/2024,Serviço de design gráfico para criação de logotipo.,06/11/2024,Fulano de Tal
-Pedro Santos,456.789.123-00,Travessa das Flores, 789 - Cidade, Estado,300,00,07/11/2024,Serviço de manutenção em sistema de gestão.,07/11/2024,Fulano de Tal
-Ana Costa,321.654.987-00,Praça das Árvores, 101 - Cidade, Estado,450,00,08/11/2024,Serviço de instalação e configuração de rede.,08/11/2024,Fulano de Tal
-Carlos Pereira,789.123.456-00,Alameda das Palmeiras, 202 - Cidade, Estado,600,00,09/11/2024,Serviço de revisão e auditoria de processos.,09/11/2024,Fulano de Tal
+Cliente,CPF_CNPJ,Endereço,Valor,Data do Pagamento,Descrição do Serviço,Data de Emissão,Recebedor,Observações
+João da Silva,123.456.789-00,Rua Exemplo, 123 - Cidade, Estado,500,00,05/11/2024,Serviço de consultoria em desenvolvimento de software.,05/11/2024,Fulano de Tal,Observacao opcional
+Maria Oliveira,987.654.321-00,Av. Central, 456 - Cidade, Estado,750,00,06/11/2024,Serviço de design gráfico para criação de logotipo.,06/11/2024,Fulano de Tal,Observacao opcional
+Pedro Santos,456.789.123-00,Travessa das Flores, 789 - Cidade, Estado,300,00,07/11/2024,Serviço de manutenção em sistema de gestão.,07/11/2024,Fulano de Tal,Observacao opcional
+Ana Costa,321.654.987-00,Praça das Árvores, 101 - Cidade, Estado,450,00,08/11/2024,Serviço de instalação e configuração de rede.,08/11/2024,Fulano de Tal,Observacao opcional
+Carlos Pereira,789.123.456-00,Alameda das Palmeiras, 202 - Cidade, Estado,600,00,09/11/2024,Serviço de revisão e auditoria de processos.,09/11/2024,Fulano de Tal,Observacao opcional
 ```
 
 ## Dependências

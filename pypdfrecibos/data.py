@@ -20,7 +20,8 @@ def parse_csv_to_receipts(file_path: str) -> List[ServiceReceipt]:
                 payment_date=datetime.strptime(row["Data do Pagamento"], "%d/%m/%Y").date(),
                 receiver_name=row["Recebedor"],
                 service_description=row["Descrição do Serviço"],
-                issue_date=datetime.strptime(row["Data de Emissão"], "%d/%m/%Y").date()
+                issue_date=datetime.strptime(row["Data de Emissão"], "%d/%m/%Y").date(),
+                observations=row.get("Observações", '') or ''
             )
 
             receipts.append(receipt)

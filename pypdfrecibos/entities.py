@@ -13,3 +13,4 @@ class ServiceReceipt:
     receiver_name: str
     service_description: str
     issue_date: date
+    observations: str = ''
