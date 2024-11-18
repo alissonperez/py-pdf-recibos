@@ -1,51 +1,76 @@
 from fpdf import FPDF
 
 
-class PDFRecibo(FPDF):
-    def __init__(self, *args, **kwargs):
-        self._add_page_number = kwargs.pop('add_page_number', True)
-        print('add_page_number:', self._add_page_number)
+class PDFReceipt(FPDF):
 
-        super().__init__(*args, **kwargs)
+    def __init__(self, add_page_number):
+        super().__init__(format='A4', orientation='P')
 
-    def header(self):
-        # Adiciona o título
-        self.set_font("Arial", "B", 12)
-        self.cell(0, 10, "RECIBO DE SERVIÇO", 0, 1, "C")
+        self._add_page_number = add_page_number
+
+        self._first_item_in_page = True
+
+        # Dimensions for A4 in points (mm)
+        self._page_width = 210  # Width in mm
+        self._page_height = 297  # Height in mm
+
+    def add_receipt(self, receipt):
+        if self._first_item_in_page:
+            self.set_xy(10, 10)
+            self._first_item_in_page = False
+        else:
+            self.set_xy(10, (self._page_height / 2))
+            self._first_item_in_page = True
+
+        self.set_font('Arial', 'B', 12)
+        self.cell(0, 0, 'RECIBO DE SERVIÇO', 0, 1, 'C')
         self.ln(10)
 
-    def footer(self):
-        self.set_y(-15)
+        # Line 1
+        self._write_item('Recebido de: ', receipt.client, 50, 70)
+        self._write_item('CPF: ', receipt.document, 30, ln=True)
 
-        # Rodapé com número da página
-        if self._add_page_number:
-            self.cell(0, 10, f"Página {self.page_no()}", 0, 0, "C")
+        # Line 2
+        self._write_item('Endereço: ', receipt.address, ln=True)
 
-    def add_recipt(self, receipt):
-        self.set_font("Arial", "", 10)
-        self.cell(0, 10, f"Recebido de: {receipt.client}", 0, 1)
-        self.cell(0, 10, f"CPF/CNPJ: {receipt.document}", 0, 1)
-        self.cell(0, 10, f"Endereço: {receipt.address}", 0, 1)
-        self.ln(5)
+        # Line 3
+        self._write_item('Valor: ', f'R$ {receipt.value:,.2f}', val_width=70)
+        self._write_item('Na data: ', receipt.payment_date.strftime('%d/%m/%Y'), 30, ln=True)
 
-        # Valor e data de pagamento
-        self.cell(0, 10, f"Valor: R$ {receipt.value:,.2f}", 0, 1)
-        self.cell(0, 10, f"Data do Pagamento: {receipt.payment_date.strftime('%d/%m/%Y')}", 0, 1)
-        self.ln(5)
-
-
-        # Descrição do serviço
-        self.cell(0, 10, "Descrição do Serviço:", 0, 1)
-        self.multi_cell(0, 10, receipt.service_description)
-        self.ln(10)
-
-        # Assinatura e data de emissão
-        self.cell(0, 10, "Assinatura: _______________________________________", 0, 1)
-        self.cell(0, 10, f"Nome completo: {receipt.receiver_name}", 0, 1)
-        self.cell(0, 10, f"Data: {receipt.issue_date.strftime('%d/%m/%Y')}", 0, 1)
-        self.ln(10)
+        # Line 4 and 5 (description)
+        self._field('Descrição do Serviço:', 0, align='L', ln=True)
+        self._value(receipt.service_description, 0, ln=True, multi=True)
+        self.set_y(self.get_y() + 7)
 
         if receipt.observations != '':
-            # Observações
-            self.cell(0, 10, "Observações:", 0, 1)
-            self.multi_cell(0, 10, receipt.observations)
+            self._field('Observações:', 0, align='L', ln=True)
+            self._value(receipt.observations, 0, ln=True, multi=True)
+            self.set_y(self.get_y() + 7)
+
+        self._write_item('Assinatura: ', '__________________________________________________', ln=True)
+        self._write_item('Nome completo: ', receipt.receiver_name, ln=True)
+        self._write_item('Data: ', receipt.issue_date.strftime('%d/%m/%Y'))
+
+    def _write_item(self, field, value, field_width=50, val_width=0, ln=False):
+        self._field(field, field_width)
+        self._value(value, val_width, ln=ln)
+
+    def _field(self, field, width, align='R', ln=False):
+        self.set_font('Arial', 'B', 10)
+        self.set_fill_color(220, 220, 220)
+        self.cell(width, 6, field, border=0, align=align, fill=True)
+
+        if ln:
+            self.ln(7)
+
+    def _value(self, value, width, ln=False, multi=False):
+        self.set_fill_color(255, 255, 255)
+        self.set_font('Arial', '', 10)
+
+        if not multi:
+            self.cell(width, 7, value)
+        else:
+            self.multi_cell(width, 7, value)
+
+        if ln:
+            self.ln(7)
