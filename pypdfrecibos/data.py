@@ -13,6 +13,7 @@ def parse_csv_to_receipts(file_path: str) -> List[ServiceReceipt]:
 
         for row in reader:
             receipt = ServiceReceipt(
+                num=int(row.get('Número', '0')),
                 client=row["Cliente"],
                 document=row["CPF_CNPJ"],
                 address=row["Endereço"],

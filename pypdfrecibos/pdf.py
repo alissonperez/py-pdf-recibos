@@ -23,6 +23,10 @@ class PDFReceipt(FPDF):
             self._first_item_in_page = True
 
         self.set_font('Arial', 'B', 12)
+
+        if receipt.num > 0:
+            self._add_receipt_num(receipt)
+
         self.cell(0, 0, 'RECIBO DE SERVIÇO', 0, 1, 'C')
         self.ln(10)
 
@@ -50,6 +54,20 @@ class PDFReceipt(FPDF):
         self._write_item('Assinatura: ', '__________________________________________________', ln=True)
         self._write_item('Nome completo: ', receipt.receiver_name, ln=True)
         self._write_item('Data: ', receipt.issue_date.strftime('%d/%m/%Y'))
+
+    def _add_receipt_num(self, receipt):
+        cur_x = self.get_x()
+        cur_y = self.get_y()
+
+        text = f'N. {receipt.num}'
+        total_text_width = max(self.get_string_width(text) + 5, 20)
+
+        self.set_xy(self._page_width - total_text_width - 10, cur_y - 2)
+        self.set_fill_color(200, 200, 200)
+        self.cell(total_text_width, 10, text, border=0, align='C', fill=True)
+        self.set_fill_color(255, 255, 255)
+
+        self.set_xy(cur_x, cur_y)
 
     def _write_item(self, field, value, field_width=50, val_width=0, ln=False):
         self._field(field, field_width)
