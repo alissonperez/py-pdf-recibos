@@ -40,6 +40,12 @@ poetry run python main.py ./recibos_servicos.csv recibos.pdf
 - `./recibos_servicos.csv`: caminho para o arquivo CSV de entrada com os dados dos recibos.
 - `recibos.pdf`: nome do arquivo PDF de saída que conterá os recibos gerados.
 
+## Executando linter
+
+```bash
+poetry run ruff check
+```
+
 ### Exemplo de PDF (em A4)
 
 <img width="561" alt="image" src="https://github.com/user-attachments/assets/0db0f73b-0b9d-410b-91bc-655cc2f56ce0">
