@@ -5,6 +5,7 @@ from dataclasses import dataclass
 
 @dataclass
 class ServiceReceipt:
+    num: int
     client: str
     document: str  # CPF/CNPJ
     address: str
