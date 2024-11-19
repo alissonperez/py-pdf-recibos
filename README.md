@@ -48,7 +48,7 @@ poetry run ruff check
 
 ### Exemplo de PDF (em A4)
 
-<img width="561" alt="image" src="https://github.com/user-attachments/assets/0db0f73b-0b9d-410b-91bc-655cc2f56ce0">
+<img width="561" alt="image" src="https://github.com/user-attachments/assets/d65d6410-1d9d-41d7-b2c6-e959d6523aa8">
 
 ## Sobre o Projeto
 
