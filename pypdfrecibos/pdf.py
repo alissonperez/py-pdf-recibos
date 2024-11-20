@@ -14,12 +14,24 @@ class PDFReceipt(FPDF):
         self._page_width = 210  # Width in mm
         self._page_height = 297  # Height in mm
 
+    def set_dash(self, dash_length=1, space_length=1):
+        """Set dashed line style."""
+        dash_pattern = f"[{dash_length} {space_length}] 0 d"
+        self._out(dash_pattern)
+
     def add_receipt(self, receipt):
         if self._first_item_in_page:
-            self.set_xy(10, 10)
+            self.set_xy(10, 7)
             self._first_item_in_page = False
+            self.set_dash(5, 3)           # Dash length of 5 units, space length of 3 units
+            self.set_draw_color(210, 210, 210)  # light gray
+            self.line(10,
+                      (self._page_height / 2) - 13,
+                      self._page_width - 10,
+                      (self._page_height / 2) - 13)
+            self.set_dash(0, 0)           # Reset to default
         else:
-            self.set_xy(10, (self._page_height / 2))
+            self.set_xy(10, (self._page_height / 2) + 2)
             self._first_item_in_page = True
 
         self.set_font('Arial', 'B', 12)
